@@ -1,0 +1,12 @@
+.LoadsPage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .LoadItem {
+        width: 22%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
