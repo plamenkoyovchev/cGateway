@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "../../http/axiosGateway";
 
 import "./LoadItems.scss";
@@ -10,16 +10,20 @@ const LoadItems = () => {
   const [loads, setLoads] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const initLoads = useCallback(() => {
+    setLoading(true);
     axios
       .get("/loads")
       .then(response => {
-        setLoading(true);
         setLoads(response.data.data);
       })
       .catch(err => {})
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    initLoads();
+  }, [initLoads]);
 
   return (
     <div>

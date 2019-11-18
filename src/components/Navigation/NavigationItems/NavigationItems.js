@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import './NavigationItems.scss';
 import NavigationItem from './NavigationItem/NavigationItem';
