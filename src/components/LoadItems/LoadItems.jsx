@@ -30,7 +30,7 @@ const LoadItems = () => {
       {loading ? <Spinner /> : null}
       <div className="LoadItems">
         {loads.map(({ id, ...otherProps }) => (
-          <LoadItem key={id} {...otherProps} />
+          <LoadItem key={id} id={id} {...otherProps} />
         ))}
       </div>
     </div>
