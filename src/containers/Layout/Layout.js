@@ -1,12 +1,13 @@
 import React from 'react';
 import Auxilary from '../../hoc/Auxilary';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
+import './Layout.scss';
 
 const Layout = ({ children }) => {
     return (
         <Auxilary>
             <Toolbar />
-            <main>{children}</main>
+            <main className="Main">{children}</main>
         </Auxilary>
     );
 }
