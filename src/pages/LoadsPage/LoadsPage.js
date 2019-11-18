@@ -1,11 +1,15 @@
-import React from 'react';
+import React from "react";
+
+import "./LoadsPage.scss";
+
+import LoadItems from "../../components/LoadItems/LoadItems";
 
 const LoadsPage = () => {
-    return (
-        <div>
-            Loads Page
-        </div>
-    );
-}
+  return (
+    <div className="LoadsPage">
+      <LoadItems />
+    </div>
+  );
+};
 
 export default LoadsPage;
