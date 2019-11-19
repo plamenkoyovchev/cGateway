@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { Component } from "react";
 import axios from "../../http/axiosGateway";
 
 import "./LoadItems.scss";
@@ -6,35 +6,74 @@ import "./LoadItems.scss";
 import LoadItem from "./LoadItem/LoadItem";
 import Spinner from "../UI/Spinner/Spinner";
 
-const LoadItems = () => {
-  const [loads, setLoads] = useState([]);
-  const [loading, setLoading] = useState(false);
+class LoadItems extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loads: [],
+      loading: false
+    };
+    this.ws = new WebSocket("ws://lisagateway-103.localy/api");
+  }
 
-  const initLoads = useCallback(() => {
-    setLoading(true);
+  componentDidMount() {
+    this.initLoads();
+    this.initSockets();
+  }
+
+  componentWillUnmount() {
+    this.ws.close();
+    this.ws.removeEventListener("message", e => {});
+  }
+
+  initSockets = () => {
+    this.ws.addEventListener("open", e => {
+      this.ws.addEventListener("message", event => {
+        const message = JSON.parse(event.data);
+        console.log(message);
+        const loadIdx = this.state.loads.findIndex(
+          l => l.id === message.load.id
+        );
+        if (loadIdx >= 0) {
+          const newLoad = {
+            ...this.state.loads[loadIdx],
+            state: { ...message.load.state }
+          };
+          const loadsToUpdate = [...this.state.loads];
+          loadsToUpdate[loadIdx] = newLoad;
+          const newLoads = loadsToUpdate;
+          this.setState({ loads: newLoads });
+        }
+
+        this.ws.send("dump_commands");
+      });
+    });
+  };
+
+  initLoads = () => {
+    console.log("initLoads");
+    this.setState({ loading: true });
     axios
       .get("/loads")
       .then(response => {
-        setLoads(response.data.data);
+        this.setState({ loads: [...response.data.data] });
       })
       .catch(err => {})
-      .finally(() => setLoading(false));
-  }, []);
+      .finally(() => this.setState({ loading: false }));
+  };
 
-  useEffect(() => {
-    initLoads();
-  }, [initLoads]);
-
-  return (
-    <div>
-      {loading ? <Spinner /> : null}
-      <div className="LoadItems">
-        {loads.map(({ id, ...otherProps }) => (
-          <LoadItem key={id} id={id} {...otherProps} />
-        ))}
+  render() {
+    return (
+      <div>
+        {this.state.loading ? <Spinner /> : null}
+        <div className="LoadItems">
+          {this.state.loads.map(({ id, ...otherProps }) => (
+            <LoadItem key={id} id={id} {...otherProps} />
+          ))}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default LoadItems;

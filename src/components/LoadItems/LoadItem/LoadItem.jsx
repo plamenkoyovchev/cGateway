@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 import "./LoadItem.scss";
 
-const LoadItem = ({ id, name, type, device, match, room }) => {
+const LoadItem = ({ id, name, type, device, match, room, state }) => {
   return (
-    <div className="LoadItem card">
+    <div className={`LoadItem card ${state && state.bri > 0 ? "red" : ""}`}>
       <div className="card-body">
         <h4 className="card-title">{name}</h4>
         <h6 className="card-subtitle mb-2 text-muted">{`Type: ${type}`}</h6>
