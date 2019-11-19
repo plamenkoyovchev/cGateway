@@ -44,9 +44,9 @@ class LoadItems extends Component {
           const newLoads = loadsToUpdate;
           this.setState({ loads: newLoads });
         }
-
-        this.ws.send("dump_commands");
       });
+
+      this.ws.send('{ "command":"dump_loads" }');
     });
   };
 
