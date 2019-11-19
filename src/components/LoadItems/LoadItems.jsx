@@ -27,25 +27,22 @@ class LoadItems extends Component {
   }
 
   initSockets = () => {
-    this.ws.addEventListener("open", e => {
-      this.ws.addEventListener("message", event => {
-        const message = JSON.parse(event.data);
-        console.log(message);
-        const loadIdx = this.state.loads.findIndex(
-          l => l.id === message.load.id
-        );
-        if (loadIdx >= 0) {
-          const newLoad = {
-            ...this.state.loads[loadIdx],
-            state: { ...message.load.state }
-          };
-          const loadsToUpdate = [...this.state.loads];
-          loadsToUpdate[loadIdx] = newLoad;
-          const newLoads = loadsToUpdate;
-          this.setState({ loads: newLoads });
-        }
-      });
+    this.ws.addEventListener("message", event => {
+      const message = JSON.parse(event.data);
+      const loadIdx = this.state.loads.findIndex(l => l.id === message.load.id);
+      if (loadIdx >= 0) {
+        const newLoad = {
+          ...this.state.loads[loadIdx],
+          state: { ...message.load.state }
+        };
+        const loadsToUpdate = [...this.state.loads];
+        loadsToUpdate[loadIdx] = newLoad;
+        const newLoads = loadsToUpdate;
+        this.setState({ loads: newLoads });
+      }
+    });
 
+    this.ws.addEventListener("open", e => {
       this.ws.send('{ "command":"dump_loads" }');
     });
   };
