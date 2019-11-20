@@ -54,11 +54,29 @@ class LoadItems extends Component {
     this.setState({ loading: true });
     axios
       .get("/loads")
-      .then(response => {
-        this.setState({ loads: [...response.data.data] });
+      .then(async response => {
+        const gwLoads = response.data.data;
+        const rooms = await this.getRooms();
+
+        gwLoads.forEach(load => {
+          const currentRoom = rooms.find(r => r.id === load.room);
+          load.roomName = currentRoom ? currentRoom.name : "not assigned";
+        });
+
+        this.setState({ loads: [...gwLoads] });
       })
       .catch(err => {})
       .finally(() => this.setState({ loading: false }));
+  };
+
+  getRooms = async () => {
+    var rooms = await axios.get("/rooms");
+    return rooms.data.data.map(r => {
+      return {
+        id: r.id,
+        name: r.name
+      };
+    });
   };
 
   toggleLoad = (event, id, state) => {

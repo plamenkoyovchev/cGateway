@@ -10,7 +10,7 @@ const LoadItem = ({
   type,
   device,
   match,
-  room,
+  roomName,
   state,
   toggleLoad
 }) => {
@@ -21,7 +21,7 @@ const LoadItem = ({
         <h4 className="card-title">{`Type: ${type}`}</h4>
         <div className="card-text">
           <p className="card-subtitle">{`Device ID: ${device}`}</p>
-          <p>{`Room ID: ${room}`}</p>
+          <p>{`Room: ${roomName}`}</p>
         </div>
         <div className="buttons-section">
           <Link
