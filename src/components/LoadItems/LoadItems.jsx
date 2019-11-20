@@ -46,7 +46,7 @@ class LoadItems extends Component {
         }
       });
 
-      this.ws.send('{ "command":"dump_loads" }');
+      setTimeout(() => this.ws.send('{ "command":"dump_loads" }'), 500);
     });
   };
 
