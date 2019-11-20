@@ -95,19 +95,17 @@ class LoadItems extends Component {
 
   render() {
     return (
-      <div>
+      <div className="LoadItems">
         {this.state.loading ? <Spinner /> : null}
-        <div className="LoadItems">
-          {this.state.loads.map(({ id, state, ...otherProps }) => (
-            <LoadItem
-              key={id}
-              id={id}
-              state={state}
-              {...otherProps}
-              toggleLoad={event => this.toggleLoad(event, id, state)}
-            />
-          ))}
-        </div>
+        {this.state.loads.map(({ id, state, ...otherProps }) => (
+          <LoadItem
+            key={id}
+            id={id}
+            state={state}
+            {...otherProps}
+            toggleLoad={event => this.toggleLoad(event, id, state)}
+          />
+        ))}
       </div>
     );
   }

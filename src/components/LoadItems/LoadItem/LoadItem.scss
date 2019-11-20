@@ -1,6 +1,5 @@
 .LoadItem {
-    width: 14%;
-    height: 100%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
@@ -8,7 +7,7 @@
     font-size: 18px;
 
     &.red {
-        background-color: lightcoral;
+        background-color: #ff9b94;
         color: white;
         font-weight: bold;
     }
