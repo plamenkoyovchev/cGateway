@@ -1,4 +1,8 @@
 .NavigationItem {
     padding: 10px 15px;
     font-size: 22px;
+
+    &.active-link {
+        text-decoration: underline;
+    }
 }

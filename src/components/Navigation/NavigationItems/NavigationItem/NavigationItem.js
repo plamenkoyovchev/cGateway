@@ -1,11 +1,11 @@
 import React from 'react';
 
 import './NavigationItem.scss';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const NavigationItem = ({ to, children }) => {
     return (
-        <Link to={to} className='NavigationItem'>{children}</Link>
+        <NavLink exact to={to} className='NavigationItem' activeClassName="active-link">{children}</NavLink>
     );
 }
 
