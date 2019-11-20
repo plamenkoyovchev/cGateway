@@ -18,7 +18,7 @@ const RoomItems = () => {
 
   return (
     <div className="RoomItems">
-      <ul class="list-group">
+      <ul className="list-group">
         {rooms.map(({ id, ...otherProps }) => (
           <RoomItem key={id} id={id} {...otherProps} />
         ))}
