@@ -24,13 +24,13 @@ class LoadItems extends Component {
   componentWillUnmount() {
     this.ws.close();
     this.ws.removeEventListener("message", e => {});
+    this.ws = null;
   }
 
   initSockets = () => {
     this.ws.addEventListener("open", e => {
       this.ws.addEventListener("message", event => {
         const message = JSON.parse(event.data);
-        console.log(message);
         const loadIdx = this.state.loads.findIndex(
           l => l.id === message.load.id
         );
@@ -51,7 +51,6 @@ class LoadItems extends Component {
   };
 
   initLoads = () => {
-    console.log("initLoads");
     this.setState({ loading: true });
     axios
       .get("/loads")
@@ -62,13 +61,33 @@ class LoadItems extends Component {
       .finally(() => this.setState({ loading: false }));
   };
 
+  toggleLoad = (event, id, state) => {
+    event.preventDefault();
+    if (!state) {
+      return;
+    }
+
+    const brightness = state.bri > 0 ? 0 : 100;
+    this.setState({ loading: true });
+    axios
+      .put(`/loads/${id}/state`, { bri: brightness })
+      .catch(err => {})
+      .finally(() => this.setState({ loading: false }));
+  };
+
   render() {
     return (
       <div>
         {this.state.loading ? <Spinner /> : null}
         <div className="LoadItems">
-          {this.state.loads.map(({ id, ...otherProps }) => (
-            <LoadItem key={id} id={id} {...otherProps} />
+          {this.state.loads.map(({ id, state, ...otherProps }) => (
+            <LoadItem
+              key={id}
+              id={id}
+              state={state}
+              {...otherProps}
+              toggleLoad={event => this.toggleLoad(event, id, state)}
+            />
           ))}
         </div>
       </div>
