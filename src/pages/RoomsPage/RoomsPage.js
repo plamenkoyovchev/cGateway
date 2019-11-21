@@ -1,12 +1,7 @@
-import React from 'react';
-import { directive } from '@babel/types';
+import React from "react";
 
 const RoomsPage = () => {
-    return (
-        <div className='RoomsPage'>
-            Rooms Page
-        </div>
-    );
-}
+  return <div className="RoomsPage">Rooms Page</div>;
+};
 
 export default RoomsPage;
