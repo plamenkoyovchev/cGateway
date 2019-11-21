@@ -3,12 +3,13 @@ import React from "react";
 import "./LoadsPage.scss";
 
 import LoadItems from "../../components/LoadItems/LoadItems";
+import RoomItems from "../../components/RoomItems/RoomItems";
 
 const LoadsPage = () => {
   return (
     <div className="LoadsPage">
-      <h1>Loads</h1>
       <LoadItems />
+      <RoomItems />
     </div>
   );
 };
