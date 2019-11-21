@@ -14,8 +14,10 @@ const LoadItem = ({
   state,
   toggleLoad
 }) => {
+  const stateColorClass = state && state.bri > 0 ? "red" : "";
+  const toggleBtnName = state && state.bri > 0 ? "Off" : "On";
   return (
-    <div className={`LoadItem card ${state && state.bri > 0 ? "red" : ""}`}>
+    <div className={`LoadItem card ${stateColorClass}`}>
       <div className="card-body">
         <h4 className="card-title">{name}</h4>
         <h4 className="card-title">{`Type: ${type}`}</h4>
@@ -31,7 +33,7 @@ const LoadItem = ({
             Details
           </Link>
           <button onClick={toggleLoad} className="btn btn-secondary">
-            Toggle
+            {toggleBtnName}
           </button>
         </div>
       </div>
